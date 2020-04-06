@@ -1,0 +1,17 @@
+---
+- hosts: all
+  remote_user: root
+  force_handlers: yes
+  tasks:
+    - name: to create a user
+      user:
+        name: sati1
+        group: student
+        append: yes
+      notify:
+        - user_add
+    - name: user_add
+      group:
+        name: fine1
+        state: present
+           

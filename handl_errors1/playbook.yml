@@ -1,0 +1,33 @@
+---
+- hosts: all
+  remote_user: root
+  become: root
+  tasks:
+    - name: to install a pkg
+      yum:
+        name: ex4.7-server
+        state: latest
+      ignore_errors: yes
+      register: ioutput
+    - name: start the service
+      service:
+        name: ex4.7-server
+        state: started
+      ignore_errors: yes
+      register: soutput
+    - name: displaying the output
+      ignore_errors: yes
+      when: ioutput.failed == true
+      debug:
+        msg: package is not available
+    - name: displaying the output
+      ignore_errors: yes
+      when: soutout.failed == true
+      debug:
+        msg: service is not available
+    - name: displaying the playbook output
+      ignore_errors: yes
+      when: ioutput.failed == true and soutput.failed == true
+      debug:
+        msg: playbook has failed
+

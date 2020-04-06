@@ -1,0 +1,20 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - block:
+      - name: to install http
+        yum:
+          name: ft
+          state: latest
+      rescue:
+      - name: to configure the firewall
+        firewalld:
+          port: 20/tp
+          permanent: true
+          state: enabled
+      always:
+      - name: always restart the service after configuration
+        service:
+          name: sshd
+          state: restarted

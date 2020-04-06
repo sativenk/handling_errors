@@ -1,0 +1,11 @@
+---
+- hosts: all
+  remote_user: root
+  tasks:
+    - name: to run a script
+      script: /home/student/PLAYBOOKS2/handl_errors1/script.sh
+      args:
+        removes: /home/student/script.sh
+        register: command_result
+        failed_when: script is not available in command_result.stdout
+        

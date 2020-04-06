@@ -1,0 +1,19 @@
+---
+- hosts: servera.lab.example.com
+  remote_user: root
+  become: true
+  tasks:
+    - name: to copy hosts file from hosts
+      block:
+      - name: to copy the contents to file1
+        copy:
+          src: /etc/hosts
+          dest: /tmp/file1
+      - name: to add the contents in file1
+        lineinfile:
+          line: 172.25.0.11 servera.example.com
+          dest: /tmp/file1
+          create: yes
+      when:
+        - ansible_distribution == "RedHat"
+        - ansible_distribution_version == "8.0"
